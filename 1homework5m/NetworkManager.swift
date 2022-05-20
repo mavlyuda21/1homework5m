@@ -15,13 +15,21 @@ class NetworkManager{
     
     private init(){}
     
-    func downloadProductsWithAsyncAwait() async throws -> [Product]{
-            let response = try await URLSession.shared.data(from: url!)
-            if let result = try JSONDecoder().decode(Products?.self, from: response.0)?.products{
-                return result
-            }else{
-                throw URLError(.zeroByteResource)
+    func downloadProductsWithCompletion(completed: @escaping([Product]) -> ()) {
+        
+        URLSession.shared.dataTask(with: url!) { (data, urlResponse, error) in
+            if error == nil {
+                do {
+                    let response = try JSONDecoder().decode(Products.self, from: data!)
+                    print("SUCCESS")
+                    DispatchQueue.main.async {
+                        completed(response.products)
+                    }
+                } catch {
+                    print("JSON Error")
+                    print(error.localizedDescription)
+                }
             }
-        }
-    
+        }.resume()
+    }
 }
