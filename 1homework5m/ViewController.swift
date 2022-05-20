@@ -83,14 +83,6 @@ class ViewController: UIViewController {
         }
     }
     
-    private func loadDataWithAsyncAwait(){
-                Task {
-                    let result = try await NetworkManager.shared.downloadProductsWithAsyncAwait()
-                    self.products = result
-                    self.reloadView()
-                }
-            }
-    
     func reloadView(){
             self.productsTableView.reloadData()
     }
