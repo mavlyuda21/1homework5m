@@ -71,17 +71,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        loadDataWithCompletion()
         loadDataWithAsyncAwait()
     }
     
-    private func loadDataWithCompletion(){
-        NetworkManager.shared.downloadProductsWithCompletion { products in
-            self.products = products
-            self.openTitle.text = "\(products.count) stores Open"
-            self.reloadView()
-        }
-    }
+    
+    
+    private func loadDataWithAsyncAwait(){
+                Task {
+                    let result = try await NetworkManager.shared.downloadProductsWithAsyncAwait()
+                    self.products = result
+                    self.reloadView()
+                }
+            }
     
     func reloadView(){
             self.productsTableView.reloadData()
