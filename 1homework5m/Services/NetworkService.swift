@@ -7,9 +7,9 @@
 
 import Foundation
 
-class NetworkManager{
+class NetworkService{
     
-    static let shared = NetworkManager()
+    static let shared = NetworkService()
     
     private let url = URL(string: "https://dummyjson.com/products")
     

@@ -15,16 +15,6 @@ struct Circle{
 
 class CircleCell: UICollectionViewCell{
     
-    
-    var circle: Circle? {
-        didSet{
-            if let image = circle?.image{
-                circleImage.image = UIImage(named: image)
-            }
-            self.titleName.text = circle?.name
-        }
-    }
-    
     private lazy var circleImage: UIImageView = {
         let view = UIImageView()
         view.clipsToBounds = true
@@ -63,9 +53,12 @@ class CircleCell: UICollectionViewCell{
         }
     }
     
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func fill(title: String,image: String){
+        circleImage.image = UIImage(named: image)
+        titleName.text = title
     }
 }
